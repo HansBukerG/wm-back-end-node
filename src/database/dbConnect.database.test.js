@@ -1,5 +1,4 @@
-const client = require('./dbConnect.database')
-
+import  {dbClient} from './dbConnect.database';
 
 describe('Should get a connection from the database', () =>{
     beforeAll(done => {
@@ -9,19 +8,19 @@ describe('Should get a connection from the database', () =>{
     test('Should get a connection to MongoDB', async () => {
 
         try {
-            await client.connect();
-
+            await dbClient.connect();
             // Establish and verify connection
-            const result = await client.db("promotions").command({ ping: 1 });
+            const result = await dbClient.db("promotions").command({ ping: 1 });
             console.log(`result: ${result}`);
+            await dbClient.close();
         } catch (error) {
-            await client.close();
+            await dbClient.close();
         }
     });
 
     afterAll(done => {
         // Closing the DB connection allows Jest to exit successfully.
-        client.close()
+        dbClient.close()
         done()
       })
 });

@@ -1,10 +1,8 @@
-// import appinit from './src/app.js'
+import { AppInit } from './src/app.js';
 
-const appInit = require('./src/app.js')
-
-const main = () => {
+const main = async () => {
     console.log('App back end dev from Hans Buker');
-    appInit();
+    AppInit()
 }
 
 main();
