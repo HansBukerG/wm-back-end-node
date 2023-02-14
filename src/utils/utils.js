@@ -5,4 +5,8 @@ const checkFilter = (filter) => {
     return filter.trim();
 }
 
+const listData = async(data) => {
+    
+}
+
 export {checkFilter}

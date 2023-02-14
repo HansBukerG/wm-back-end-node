@@ -1,21 +1,30 @@
+// import  {dbClient} from './dbConnect.database';
 import { ReasonPhrases,	StatusCodes, getReasonPhrase, getStatusCode } from 'http-status-codes';
-import {read,readById,readByString} from './product.repository'
+import {read,readById,readByString} from './product.repository';
 
 describe('All read operations should receive status 202 ACCEPTED', () => {
-
     test('read() should receive 202 ACCEPTED', async () => {
-        let datatest = [
-            {filter: 'hello', statusCode:StatusCodes.ACCEPTED},
-        ]
-        
-        datatest.forEach(async(element) => {
-            let { products, status } = await read(element.filter);
-
-            products.forEach(product => console.log(product));
-            expect(status).toBe(element.statusCode)
-        });
-
-        // const { status } = await read();
-        // expect(status).toBe(StatusCodes.ACCEPTED)
+        const { status } = await read();
+        expect(status).toBe(StatusCodes.ACCEPTED)
     });
+
+    test('readById(): Should receive expected data',async()=>{
+        const testData = [
+            {filter: 0, result:StatusCodes.NOT_FOUND},
+            {filter: 5000, result:StatusCodes.NOT_FOUND},
+            {filter: 'asdsa', result:StatusCodes.NOT_FOUND},
+            {filter: '', result:StatusCodes.NOT_FOUND},
+            {filter: 1, result:StatusCodes.ACCEPTED},
+        ]
+
+        for await (const datum of testData){
+            const { status } = await readById(datum.filter)
+            expect( status ).toBe(datum.result)
+        }
+        // const {products, status} = await readById(0);
+        // expect(status).toBe(StatusCodes.ACCEPTED)
+        // for await(const product of products){
+        //     console.log(product);
+        // }
+    })
 })
