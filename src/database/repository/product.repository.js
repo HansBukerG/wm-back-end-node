@@ -68,9 +68,32 @@ const readById = async (filter) => {
     return { products, status }
 };
 
-const readByString = async () => {
-    let products
-    let statusCode
+const readByString = async (filter) => {
+    let products = []
+    let status = 0
+    const query = { '$or': [
+        {"id": filter},
+        { "brand": new RegExp(filter,'i')},
+        { "description": new RegExp(filter,'i')}
+    ]
+    }
+    const sort = {id: 1}
+    try {
+        await dbClient.connect()
+        const result = await dbClient.db(database).collection('products').find(query).sort(sort)
+        for await (const product of result){
+            products.push(product)
+        }
+        if (products.length !== 0) {
+            status = StatusCodes.ACCEPTED
+        } else {
+            status = StatusCodes.NOT_FOUND
+        }
+    } catch (error) {
+        status = StatusCodes.BAD_GATEWAY
+    } finally {
+        await dbClient.close()
+    }
     return { products, status }
 };
 

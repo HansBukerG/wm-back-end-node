@@ -21,10 +21,19 @@ describe('All read operations should receive status 202 ACCEPTED', () => {
             const { status } = await readById(datum.filter)
             expect( status ).toBe(datum.result)
         }
-        // const {products, status} = await readById(0);
-        // expect(status).toBe(StatusCodes.ACCEPTED)
-        // for await(const product of products){
-        //     console.log(product);
-        // }
+    })
+
+    test('readByString(): Should receive 202 ACCEPTED', async() => {
+        const testData = [
+            {filter: 0, result:StatusCodes.NOT_FOUND},
+            {filter: 15, result:StatusCodes.ACCEPTED},
+            {filter: 'asdf', result:StatusCodes.ACCEPTED},
+            {filter: 'qrñfsf', result:StatusCodes.ACCEPTED},
+        ]
+        for await (const datum of testData){
+            const { products ,status } = await readByString(datum.filter)
+            console.log(products);
+            expect( status ).toBe(datum.result)
+        }
     })
 })
