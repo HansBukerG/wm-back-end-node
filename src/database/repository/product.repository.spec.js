@@ -15,6 +15,8 @@ describe('All read operations should receive status 202 ACCEPTED', () => {
             {filter: 'asdsa', result:StatusCodes.NOT_FOUND},
             {filter: '', result:StatusCodes.NOT_FOUND},
             {filter: 1, result:StatusCodes.ACCEPTED},
+            {filter: 10, result:StatusCodes.ACCEPTED},
+            {filter: 20, result:StatusCodes.ACCEPTED},
         ]
 
         for await (const datum of testData){
@@ -32,7 +34,6 @@ describe('All read operations should receive status 202 ACCEPTED', () => {
         ]
         for await (const datum of testData){
             const { products ,status } = await readByString(datum.filter)
-            console.log(products);
             expect( status ).toBe(datum.result)
         }
     })

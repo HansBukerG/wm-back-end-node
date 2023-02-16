@@ -1,9 +1,9 @@
 
 import { Router } from 'express'
-import { readById,readByString } from '../Controllers/Product.Controller.js'
+import {read, readById } from '../Controllers/Product.Controller.js'
 const RouterProduct = Router();
 
-RouterProduct.get('/search/', readById);
-RouterProduct.get('/search/:id', readByString);
+RouterProduct.get('/search/', read);
+RouterProduct.get('/search/:id', readById);
 
 export { RouterProduct };

@@ -1,4 +1,4 @@
-import { database, dbClient } from '../dbConnect.database';
+import { database, dbClient } from '../dbConnect.database.js';
 import { ReasonPhrases,	StatusCodes, getReasonPhrase, getStatusCode } from 'http-status-codes';
 
 const collection = dbClient.db('promptions').collection('products')
@@ -25,7 +25,6 @@ const read = async () => {
             .project(projection)
             .sort(sort)
             .limit(limit)
-            // .forEach(product => products.push(product))
         for await (const product of result){
             if (result.length !== 0) {
                 products.push(product)

@@ -1,7 +1,18 @@
+import {read,readById,readByString} from '../database/repository/product.repository.js'
+
 const Read = async () => {
-    result = 'hello'
-    code = 202
-    return { result , code }
+    const {products , status} = await read();
+    return {products , status} 
 }
 
-export { Read }
+const ReadById = async (filter) =>{
+    const {products , status} = await readById(filter);
+    return {products , status} 
+}
+
+const ReadByString = async (filter) =>{
+    const {products , status} = await readByString(filter);
+    return {products , status} 
+}
+
+export { Read,ReadById,ReadByString }
