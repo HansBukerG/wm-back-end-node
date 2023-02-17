@@ -66,6 +66,12 @@ const prepareRequestData = (products, resStatus) => {
           });
         
     }
+    products.sort((p1, p2) => {
+        let output = 0;
+        if (p1.discount_percentaje < p2.discount_percentaje) output = 1;
+        if (p1.discount_percentaje > p2.discount_percentaje) output = -1;      
+        return output;
+    })
 }
 
 export {checkFilter,

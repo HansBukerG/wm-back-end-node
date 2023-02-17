@@ -7,7 +7,6 @@ const read = async (request,response) =>{
   const {products , status} = await Read();
 
   prepareRequestData(products,status)
-  products.sort((p1, p2) => (p1.discount_percentaje < p2.discount_percentaje) ? 1 : (p1.discount_percentaje > p2.discount_percentaje) ? -1 : 0) 
 
   const jsonContent = JSON.stringify(products);
   response.setHeader("Content-Type", "application/json");
@@ -21,7 +20,6 @@ const readById = async (request, response) => {
   const {products , status} = await ReadById(filter)
 
   prepareRequestData(products,status)
-  products.sort((p1, p2) => (p1.discount_percentaje < p2.discount_percentaje) ? 1 : (p1.discount_percentaje > p2.discount_percentaje) ? -1 : 0) 
 
   const jsonContent = JSON.stringify(products);
   response.setHeader("Content-Type", "application/json");
@@ -45,7 +43,6 @@ const readByString = async (request,response) => {
   }
 
   prepareRequestData(resProducts, resStatus)
-  resProducts.sort((p1, p2) => (p1.discount_percentaje < p2.discount_percentaje) ? 1 : (p1.discount_percentaje > p2.discount_percentaje) ? -1 : 0) 
 
   const jsonContent = JSON.stringify(resProducts);
   response.setHeader("Content-Type", "application/json");
