@@ -64,7 +64,7 @@ const prepareRequestData = (products, resStatus) => {
         products.forEach(product => {
             applyDiscountToProduct(product) 
           });
-        products.sort((p1, p2) => (p1.discount_percentaje < p2.discount_percentaje) ? 1 : (p1.discount_percentaje > p2.discount_percentaje) ? -1 : 0) 
+        
     }
 }
 
