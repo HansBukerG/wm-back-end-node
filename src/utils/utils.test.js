@@ -1,4 +1,5 @@
-import {AddProducts, checkFilter,findProduct,checkPalindrome, checkProduct, applyDiscountToProduct} from './utils'
+import { StatusCodes } from 'http-status-codes'
+import {AddProducts, checkFilter,findProduct,checkPalindrome, checkProduct, applyDiscountToProduct, prepareRequestData} from './utils'
 
 describe('All test from utils should pass', () => {
     test('checkFilter() should return words without spaces', () => {
@@ -101,11 +102,22 @@ describe('All test from utils should pass', () => {
         ]
 
         for (const datum of testData){
-            const result = applyDiscountToProduct(datum.product)
-            console.log(result);
-            expect(result.price).toBe(datum.result.price)
+            applyDiscountToProduct(datum.product)
+            expect(datum.product.price).toBe(datum.result.price)
         }
+    })
 
+    test('prepareRequestData(): Should set discount prices and sort the outpur response', () => {
+        const testData = {products: [
+            {id:1,brand:'asdf',description:'asd', price:1000},
+            {id:15,brand:'asdfdsa',description:'asd', price:1000},
+            {id:15,brand:'asdf',description:'asddsa', price:1000},
+            {id:15,brand:'asdf',description:'asd', price:1000},
+            {id:15,brand:'asdf',description:'asd', price:1000},
+        ], status:StatusCodes.ACCEPTED}
+
+        prepareRequestData(testData.products,testData.status)
+        testData.products.forEach(product => console.log(product))
     })
 
 })
