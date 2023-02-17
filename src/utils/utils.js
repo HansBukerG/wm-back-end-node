@@ -1,3 +1,5 @@
+import { StatusCodes } from "http-status-codes";
+
 const checkFilter = (filter) => {
     if (filter.trim().normalize().length == 0) {
         return ''
@@ -55,7 +57,25 @@ const applyDiscountToProduct = (product) => {
         product.discount_percentaje = 0
         product.original_price = 0
     }
-    return product
 }
 
-export {checkFilter,findProduct, AddProducts, checkPalindrome,checkProduct,applyDiscountToProduct}
+const prepareRequestData = (products, resStatus) => {
+    if (resStatus == StatusCodes.ACCEPTED) {
+        products.forEach(product => {
+            applyDiscountToProduct(product) 
+          });
+        
+          products = products.sort(
+          (p1, p2) => (p1.discount_percentaje < p2.discount_percentaje) ? 1 : (p1.discount_percentaje > p2.discount_percentaje) ? -1 : 0
+          ) 
+    }
+}
+
+export {checkFilter,
+    findProduct,
+     AddProducts, 
+     checkPalindrome,
+     checkProduct,
+     applyDiscountToProduct,
+     prepareRequestData
+    }
