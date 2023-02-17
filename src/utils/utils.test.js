@@ -1,4 +1,4 @@
-import {AddProducts, checkFilter,findProduct} from './utils'
+import {AddProducts, checkFilter,findProduct,checkPalindrome, checkProduct, applyDiscountToProduct} from './utils'
 
 describe('All test from utils should pass', () => {
     test('checkFilter() should return words without spaces', () => {
@@ -60,8 +60,52 @@ describe('All test from utils should pass', () => {
             {id:60},
         ]
 
-        const result = await AddProducts(sliceA,sliceB);
-        console.log('result slice:');
-        console.log(result);
+        const result = AddProducts(sliceA,sliceB);
+        expect(result.length).toBe(resultSlice.length)
     });
+
+    test('checkPalindrome(): Should return true if filter is palindrome',() =>{
+        const testData = [
+            {filter:'aeiou', result:false},
+            {filter:'asddsa', result:true},
+            {filter:'asa', result:true},
+            {filter:'hola', result:false},
+        ]
+
+        for (const datum of testData){
+            const result = checkPalindrome(datum.filter)
+            expect(result).toBe(datum.result)
+        }
+
+    })
+
+    test('checkProduct(): Should return tru if a palindrome is inside of object', ()=> {
+        const testData = [
+            {product: {id:15,brand:'asdf',description:'asd'}, result:false},
+            {product: {id:1,brand:'asdf',description:'asd'}, result:true},
+            {product: {id:15,brand:'asddsa',description:'asd'}, result:true},
+            {product: {id:15,brand:'asddfsa',description:'asddsa'}, result:true},
+            {product: {id:10,brand:'',description:''}, result:true},
+        ]
+
+        for (const datum of testData){
+            const result = checkProduct(datum.product)
+            expect(result).toBe(datum.result)
+        }
+    })
+
+    test('applyDiscountToProduct(): Should apply a discount to a product', () => {      
+        const testData = [
+            {product: {id:15,brand:'asdf',description:'asd', price:1000}, result:{id:15,brand:'asdf',description:'asd',price:1000,discount_percentaje: 0, original_price:0 }},
+            {product: {id:1,brand:'asdf',description:'asd', price:1000}, result:{id:15,brand:'asdf',description:'asd',price:500,discount_percentaje: 50, original_price:1000 }},
+        ]
+
+        for (const datum of testData){
+            const result = applyDiscountToProduct(datum.product)
+            console.log(result);
+            expect(result.price).toBe(datum.result.price)
+        }
+
+    })
+
 })

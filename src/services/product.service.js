@@ -11,7 +11,11 @@ const ReadById = async (filter) =>{
 }
 
 const ReadByString = async (filter) =>{
+
+    // const arrfillter = request.params.id.toLowerCase().trim().split(' ')
+
     const {products , status} = await readByString(filter);
+
     return {products , status} 
 }
 

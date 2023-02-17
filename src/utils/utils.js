@@ -5,7 +5,7 @@ const checkFilter = (filter) => {
     return filter.trim();
 }
 
-const AddProducts = async(sliceOfProducts, productsToAdd) => {
+const AddProducts = (sliceOfProducts, productsToAdd) => {
     if (productsToAdd.length != 0) {
         if (sliceOfProducts.length == 0) {
             sliceOfProducts = productsToAdd;
@@ -30,4 +30,32 @@ const findProduct = (products, productToFind) => {
     return result;
 }
 
-export {checkFilter,findProduct, AddProducts}
+const checkPalindrome= (filter) => {
+    let result = false;
+    if (filter == filter.split('').reverse().join('')) {
+        result = true
+    }
+    return result
+}
+
+const checkProduct = (product) =>{
+    let result = false;
+    if (checkPalindrome(product.id.toString())) result = true;
+    if (checkPalindrome(product.brand)) result = true;
+    if (checkPalindrome(product.description)) result = true;
+    return result
+}
+
+const applyDiscountToProduct = (product) => {
+    if (checkProduct(product)) {
+        product.discount_percentaje = 50
+        product.original_price = product.price
+        product.price = product.price / 2
+    }else{
+        product.discount_percentaje = 0
+        product.original_price = 0
+    }
+    return product
+}
+
+export {checkFilter,findProduct, AddProducts, checkPalindrome,checkProduct,applyDiscountToProduct}
