@@ -1,4 +1,4 @@
-import  {dbClient, listDatabases} from './dbConnect.database';
+import  {dbClient} from './dbConnect.database';
 
 describe('Should get a connection from the database', () =>{
     test('Should get a connection to MongoDB', async () => {
