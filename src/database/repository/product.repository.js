@@ -1,7 +1,6 @@
 import { database, dbClient } from '../dbConnect.database.js';
-import { ReasonPhrases,	StatusCodes, getReasonPhrase, getStatusCode } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
-const collection = dbClient.db('promptions').collection('products')
 const projection = {
     id:1,
     brand:'',
@@ -47,7 +46,6 @@ const readById = async (filter) => {
     let products = []
     let status = 0
     const query = {id:filter}
-    const sort = {id: 1}
     try {
         await dbClient.connect();
         const result = await dbClient.db(database).collection('products').find(query)
@@ -70,10 +68,11 @@ const readById = async (filter) => {
 const readByString = async (filter) => {
     let products = []
     let status = 0
+    let regFilter = new RegExp(filter,'i')
     const query = { '$or': [
         {"id": filter},
-        { "brand": new RegExp(filter,'i')},
-        { "description": new RegExp(filter,'i')}
+        { "brand": regFilter},
+        { "description": regFilter}
     ]
     }
     const sort = {id: 1}
@@ -95,7 +94,4 @@ const readByString = async (filter) => {
     }
     return { products, status }
 };
-
-
-
 export {read,readById,readByString}

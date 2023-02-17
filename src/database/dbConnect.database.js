@@ -11,13 +11,4 @@ const uri = `${schema}://${usr}:${pwd}@${host}`
 
 const dbClient = new MongoClient(uri)
 
-//func for testing purposes
-const listDatabases = async(client) => {
-    const databasesList = await client.db().admin().listDatabases();
-    // console.log("Databases");
-    // databasesList.databases.forEach(db => {
-    //     // console.log(`- ${db.name}`);
-    // })
-}
-
-export {database, dbClient, listDatabases }
+export {database, dbClient}
