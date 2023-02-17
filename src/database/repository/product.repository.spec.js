@@ -1,5 +1,4 @@
-// import  {dbClient} from './dbConnect.database';
-import { ReasonPhrases,	StatusCodes, getReasonPhrase, getStatusCode } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import {read,readById,readByString} from './product.repository';
 
 describe('All read operations should receive status 202 ACCEPTED', () => {
@@ -33,7 +32,7 @@ describe('All read operations should receive status 202 ACCEPTED', () => {
             {filter: 'qrñfsf', result:StatusCodes.ACCEPTED},
         ]
         for await (const datum of testData){
-            const { products ,status } = await readByString(datum.filter)
+            const { status } = await readByString(datum.filter)
             expect( status ).toBe(datum.result)
         }
     })
